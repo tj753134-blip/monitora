@@ -18,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -48,10 +48,10 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     
-    // Supabase
-    implementation("io.github.jan-tennert.supabase:gotrue-kt:3.0.1")
-    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.0.1")
-    implementation("io.github.jan-tennert.supabase:realtime-kt:3.0.1")
+    // Supabase - Versão compatível
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.5.0")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:2.5.0")
+    implementation("io.github.jan-tennert.supabase:realtime-kt:2.5.0")
     
     // Serialização
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")

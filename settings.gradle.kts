@@ -3,6 +3,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+        maven("https://maven.pkg.jetbrains.space/public/p/supabase/maven")
     }
 }
 dependencyResolutionManagement {
@@ -12,6 +14,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
         maven("https://jitpack.io")
+        maven("https://maven.pkg.jetbrains.space/public/p/supabase/maven")
     }
 }
 rootProject.name = "MonitorApp"
