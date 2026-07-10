@@ -1,0 +1,7 @@
+# Ignore local environment files
+local.properties
+
+# Android Studio / Gradle
+.gradle/
+/build/
+**/build/

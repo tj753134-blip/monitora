@@ -1,0 +1,9 @@
+<!-- res/values/strings.xml -->
+<resources>
+    <string name="app_name">MonitorApp</string>
+    <string name="monitorador">📱 Monitorador</string>
+    <string name="monitorado">📷 Monitorado</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="esconder_icone">Esconder Ícone (Root)</string>
+    <string name="dashboard">Dashboard</string>
+</resources>
