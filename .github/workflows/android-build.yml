@@ -32,10 +32,14 @@ jobs:
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           echo "android.sdk.path=$ANDROID_SDK_ROOT" >> local.properties
 
+      - name: Install Gradle distribution
+        run: |
+          curl -L https://services.gradle.org/distributions/gradle-8.2-bin.zip -o /tmp/gradle-8.2-bin.zip
+          unzip -o /tmp/gradle-8.2-bin.zip -d /tmp
+
       - name: Build debug APK
         run: |
-          chmod +x gradlew
-          java -jar gradle/wrapper/gradle-wrapper.jar assembleDebug --stacktrace --info --console=plain
+          /tmp/gradle-8.2/bin/gradle assembleDebug --stacktrace --console=plain
 
       - name: Fail if build did not produce APK
         run: |
