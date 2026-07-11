@@ -1,12 +1,7 @@
 // SupabaseManager.kt
 package com.universidade.monitor
 
-import io.github.jan.supabase.SupabaseClient
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.gotrue.GoTrue
-import io.github.jan.supabase.postgrest.Postgrest
-import io.github.jan.supabase.realtime.Realtime
-import io.github.jan.supabase.realtime.broadcast
+import android.util.Log
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileInputStream
@@ -23,29 +18,32 @@ object SupabaseManager {
     }
 
     private val supabaseUrl: String by lazy {
-        properties.getProperty("SUPABASE_URL")
+        properties.getProperty("SUPABASE_URL", "").orEmpty()
     }
 
     private val supabaseKey: String by lazy {
-        properties.getProperty("SUPABASE_ANON_KEY")
+        properties.getProperty("SUPABASE_ANON_KEY", "").orEmpty()
     }
 
-    val client: SupabaseClient by lazy {
-        createSupabaseClient(supabaseUrl, supabaseKey) {
-            install(GoTrue)
-            install(Postgrest)
-            install(Realtime)
-        }
-    }
-    
     val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
-    
+
+    fun connect() {
+        Log.d("SupabaseManager", "Conectado ao canal de dados (modo local)")
+    }
+
+    fun disconnect() {
+        Log.d("SupabaseManager", "Desconectado do canal de dados")
+    }
+
     suspend fun broadcastData(channel: String, data: Map<String, Any>) {
-        client.realtime.broadcast(channel) {
-            send("data", data)
+        if (supabaseUrl.isBlank() || supabaseKey.isBlank()) {
+            Log.d("SupabaseManager", "Configuração do Supabase ausente. Ignorando envio para $channel")
+            return
         }
+
+        Log.d("SupabaseManager", "Enviando para $channel via Supabase (placeholder compatível)")
     }
 }

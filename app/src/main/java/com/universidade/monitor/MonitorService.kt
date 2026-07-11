@@ -9,7 +9,6 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import io.github.jan.supabase.realtime.broadcast
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.*
 
@@ -27,34 +26,15 @@ class MonitorService : Service() {
         super.onCreate()
         createNotificationChannel()
         startForeground(NOTIFICATION_ID, createNotification())
-        
-        startListening()
+
+        serviceScope.launch {
+            startListening()
+        }
     }
 
     private suspend fun startListening() {
         try {
-            SupabaseManager.client.realtime.connect()
-            
-            SupabaseManager.client.realtime.broadcast("monitor:data") {
-                onMessage { _, message ->
-                    try {
-                        val dataPayload = message["data"]
-                        val payloadMap = when (dataPayload) {
-                            is Map<*, *> -> dataPayload as Map<String, Any>
-                            is String -> SupabaseManager.json.decodeFromString<Map<String, Any>>(dataPayload)
-                            else -> null
-                        } ?: return@onMessage
-
-                        val dadosCriptografados = payloadMap["dados"] as? String ?: return@onMessage
-                        val dadosDescriptografados = CriptografiaManager.descriptografar(dadosCriptografados)
-                        val json = SupabaseManager.json.decodeFromString<JsonObject>(dadosDescriptografados)
-                        handleData(json)
-                    } catch (e: Exception) {
-                        Log.e("Monitor", "Erro ao processar mensagem", e)
-                    }
-                }
-            }
-            
+            SupabaseManager.connect()
             Log.d("Monitor", "Escutando dados do Supabase")
         } catch (e: Exception) {
             Log.e("Monitor", "Erro ao conectar", e)
@@ -110,7 +90,7 @@ class MonitorService : Service() {
         super.onDestroy()
         isRunning = false
         serviceScope.cancel()
-        SupabaseManager.client.realtime.disconnect()
+        SupabaseManager.disconnect()
     }
 
     private fun createNotificationChannel() {

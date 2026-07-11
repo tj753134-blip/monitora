@@ -45,13 +45,11 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.1.0")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    
-    // Supabase - Versão compatível
-    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.5.0")
-    implementation("io.github.jan-tennert.supabase:postgrest-kt:2.5.0")
-    implementation("io.github.jan-tennert.supabase:realtime-kt:2.5.0")
     
     // Serialização
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")

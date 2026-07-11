@@ -4,6 +4,7 @@ package com.universidade.monitor
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.PixelFormat
@@ -22,7 +23,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import io.github.jan.supabase.realtime.broadcast
+import com.google.android.gms.tasks.await
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.*
 import java.io.ByteArrayOutputStream
@@ -36,7 +37,7 @@ class CollectorService : Service() {
     companion object {
         private const val CHANNEL_ID = "collector_channel"
         private const val NOTIFICATION_ID = 1001
-        private const val COLLECT_INTERVAL = 30000L // 30 segundos
+        private const val COLLECT_INTERVAL = 15L * 60 * 1000L // 15 minutos (mínimo do WorkManager)
     }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -110,7 +111,7 @@ class CollectorService : Service() {
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setAudioSamplingRate(44100)
-                setAudioBitRate(128000)
+                setAudioEncodingBitRate(128000)
             }
         } catch (e: Exception) {
             Log.e("Collector", "Erro setup áudio", e)
@@ -279,7 +280,7 @@ class CollectorService : Service() {
 
     private suspend fun sendData(data: JsonObject) {
         try {
-            val dadosJson = SupabaseManager.json.encodeToString(data)
+            val dadosJson = data.toString()
             val dadosCriptografados = CriptografiaManager.criptografar(dadosJson)
 
             SupabaseManager.broadcastData("monitor:data", mapOf(
