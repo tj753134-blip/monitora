@@ -33,10 +33,8 @@ jobs:
           echo "android.sdk.path=$ANDROID_SDK_ROOT" >> local.properties
 
       - name: Build debug APK
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: 8.2
-          arguments: assembleDebug --stacktrace --info --console=plain
+        run: |
+          ./gradlew assembleDebug --stacktrace --info --console=plain
 
       - name: Fail if build did not produce APK
         run: |
