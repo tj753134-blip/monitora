@@ -3,8 +3,6 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
-        maven("https://maven.pkg.jetbrains.space/public/p/supabase/maven")
     }
 }
 dependencyResolutionManagement {
@@ -13,9 +11,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
-        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
         maven("https://jitpack.io")
-        maven("https://maven.pkg.jetbrains.space/public/p/supabase/maven")
         maven("https://plugins.gradle.org/m2/")
     }
 }

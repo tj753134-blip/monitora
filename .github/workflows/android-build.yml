@@ -30,7 +30,7 @@ jobs:
       - name: Install Android SDK packages
         run: |
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
-          echo "android.sdk.path=$ANDROID_SDK_ROOT" >> local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> local.properties
 
       - name: Install Gradle distribution
         run: |
